@@ -14,7 +14,23 @@
 	function confirm_query($result_set) {
 		if (!$result_set) {
 			die("Database query failed");
-		}		
+		}
+	}
+
+	
+	function form_errors($errors=array()) {
+		$output = "";
+		if (!empty($errors)) {
+			$output .= "<div class=\"error\">";
+			$output .= "Please fix the following errors:";
+			$output .= "<ul>";
+			foreach ($errors as $key => $error) {
+				$output .= "<li>{$error}</li>";
+			}
+			$output .= "</ul>";
+			$output .= "</div>";
+		}
+		return $output;
 	}
 
 	function find_all_subjects() {
@@ -34,7 +50,7 @@
 
 		// we take $subject_id from $_GET and then we use it in our query, that's why we have to secure that value, otherwise, user can try and attempt an sql injection
 		$safe_subject_id = mysqli_real_escape_string($connection, $subject_id);
-		
+
 		$query  = "SELECT * ";
 		$query .= "FROM pages ";
 		$query .= "WHERE visible = 1 ";

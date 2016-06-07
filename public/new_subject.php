@@ -1,5 +1,7 @@
+<?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
+
 <?php include("../includes/layouts/header.php"); ?>
 <?php find_selected_page(); ?>
 
@@ -8,6 +10,9 @@
 		<?php echo navigation($current_subject, $current_page); ?>
 	</div>
 	<div id="page">
+		<?php echo message(); ?>
+		<?php $errors = errors(); ?>
+		<?php echo form_errors($errors); ?>
 		<h2>Create Subject</h2>
 
 		<form action="create_subject.php" method="post">
