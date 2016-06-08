@@ -6,7 +6,7 @@
 <?php find_selected_page(); ?>
 
 <?php
-    if (!$current_subject) {
+    if (!$current_page) {
         // subject ID was missing or invalid or
         // subject couldn't be found in database
         redirect_to("manage_content.php");
@@ -70,11 +70,11 @@
                 }
             ?>
             <?php echo form_errors($errors); ?>
-            <h2>Edit Subject: <?php echo htmlentities($current_subject["menu_name"]); ?></h2>
+            <h2>Edit Subject: <?php echo htmlentities($current_page["menu_name"]); ?></h2>
 
-            <form action="edit_subject.php?subject=<?php echo urlencode($current_subject["id"]); ?>" method="post">
+            <form action="edit_subject.php?subject=<?php echo urlencode($current_page["id"]); ?>" method="post">
                 <p>Menu name:
-                    <input type="text" name="menu_name" value="<?php echo htmlentities($current_subject["menu_name"]); ?>" />
+                    <input type="text" name="menu_name" value="<?php echo htmlentities($current_page["menu_name"]); ?>" />
                 </p>
                 <p>Position:
                     <select name="position">
@@ -83,7 +83,7 @@
                         $subject_count = mysqli_num_rows($subject_set);
                         for ($count=1; $count <= $subject_count; $count++) {
                             echo "<option value=\"{$count}\"";
-                            if ($current_subject["position"] == $count) {
+                            if ($current_page["position"] == $count) {
                                 echo " selected";
                             }
                             echo ">{$count}</option>";
@@ -92,9 +92,9 @@
                     </select>
                 </p>
                 <p>Visible:
-                    <input type="radio" name="visible" value="0" <?php echo ($current_subject["visible"] == 0) ? "checked" : "" ; ?> /> No
+                    <input type="radio" name="visible" value="0" <?php echo ($current_page["visible"] == 0) ? "checked" : "" ; ?> /> No
                     &nbsp;
-                    <input type="radio" name="visible" value="1" <?php echo ($current_subject["visible"] == 1) ? "checked" : "" ; ?>/> Yes
+                    <input type="radio" name="visible" value="1" <?php echo ($current_page["visible"] == 1) ? "checked" : "" ; ?>/> Yes
                 </p>
                 <input type="submit" name="submit" value="Edit Subject" />
             </form>
