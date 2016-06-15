@@ -3,9 +3,9 @@
 $errors = array();
 
 function fieldname_as_text($fieldname) {
-	$fieldname = str_replace('_', ' ', $fieldname);
-	$fieldname = ucfirst($fieldname);
-	return $fieldname;
+  $fieldname = str_replace("_", " ", $fieldname);
+  $fieldname = ucfirst($fieldname);
+  return $fieldname;
 }
 
 // * presence
@@ -17,13 +17,13 @@ function has_presence($value) {
 }
 
 function validate_presences($required_fields) {
-	global $errors;
-	foreach ($required_fields as $field) {
-		$value = trim($_POST[$field]);
-		if (!has_presence($value)) {
-			$errors[$field] = fieldname_as_text($field) . " can't be blank";
-		}
-	}
+  global $errors;
+  foreach($required_fields as $field) {
+    $value = trim($_POST[$field]);
+  	if (!has_presence($value)) {
+  		$errors[$field] = fieldname_as_text($field) . " can't be blank";
+  	}
+  }
 }
 
 // * string length
