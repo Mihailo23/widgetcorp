@@ -17,13 +17,14 @@ if (isset($_POST['submit'])) {
   if (empty($errors)) {
     // Perform Create
 
+    // make sure you add the subject_id!
     $username = mysql_prep($_POST["username"]);
-    $hashed_password = mysql_prep($_POST["password"]);
-    
+    $hashed_password = (int) $_POST["password"];
+  
     $query  = "INSERT INTO admins (";
-    $query .= "  username, hashed_password";
+    $query .= " username, hashed_password ";
     $query .= ") VALUES (";
-    $query .= "  '{$username}', '{$hashed_password}'";
+    $query .= " '{$username}', '{$hashed_password}'";
     $query .= ")";
     $result = mysqli_query($connection, $query);
 
@@ -59,7 +60,7 @@ if (isset($_POST['submit'])) {
         <input type="text" name="username" value="" />
       </p>
       <p>Password:
-        <input type="password" name="password" value="" />
+        <input type="password" name="password" value="">
       </p>
       <input type="submit" name="submit" value="Create Admin" />
     </form>
