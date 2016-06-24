@@ -3,6 +3,8 @@
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
 
+<?php confirm_logged_in(); ?>
+
 <?php find_selected_page(); ?>
 
 <?php

@@ -2,6 +2,8 @@
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 
+<?php confirm_logged_in(); ?>
+
 <?php
   $current_page = find_page_by_id($_GET["page"], false);
   if (!$current_page) {

@@ -3,9 +3,8 @@
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
 
-<?php confirm_logged_in(); ?>
-
 <?php
+$username = "";
 if (isset($_POST['submit'])) {
   // Process the form
   
@@ -13,30 +12,21 @@ if (isset($_POST['submit'])) {
   $required_fields = array("username", "password");
   validate_presences($required_fields);
   
-  $fields_with_max_lengths = array("username" => 30);
-  validate_max_lengths($fields_with_max_lengths);
-  
   if (empty($errors)) {
-    // Perform Create
+    // Attempt login
 
-    // make sure you add the subject_id!
-    $username = mysql_prep($_POST["username"]);
-    $hashed_password = password_encrypt($_POST["password"]);
-  
-    $query  = "INSERT INTO admins (";
-    $query .= " username, hashed_password ";
-    $query .= ") VALUES (";
-    $query .= " '{$username}', '{$hashed_password}'";
-    $query .= ")";
-    $result = mysqli_query($connection, $query);
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $found_admin = attempt_login($username, $password);
 
-    if ($result) {
+    if ($found_admin) {
       // Success
-      $_SESSION["message"] = "Admin created.";
-      redirect_to("manage_admins.php");
+      $_SESSION["admin_id"] = $found_admin["id"];
+      $_SESSION["username"] = $found_admin["username"];
+      redirect_to("admin.php");
     } else {
       // Failure
-      $_SESSION["message"] = "Admin creation failed.";
+      $_SESSION["message"] = "Username/password not found.";
     }
   }
 } else {
@@ -56,18 +46,17 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2>Create Admin</h2>
-    <form action="new_admin.php" method="post">
+    <h2>Login</h2>
+    <form action="login.php" method="post">
       <p>Username:
-        <input type="text" name="username" value="" />
+        <input type="text" name="username" value="<?php echo htmlentities($username); ?>" />
       </p>
       <p>Password:
         <input type="password" name="password" value="">
       </p>
-      <input type="submit" name="submit" value="Create Admin" />
+      <input type="submit" name="submit" value="Submit" />
     </form>
     <br />
-    <a href="manage_admins.php">Cancel</a>
   </div>
 </div>
 

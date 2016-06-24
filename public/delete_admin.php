@@ -2,6 +2,8 @@
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 
+<?php confirm_logged_in(); ?>
+
 <?php
   $current_admin = find_admin_by_id($_GET["id"]);
   if (!$current_admin) {
